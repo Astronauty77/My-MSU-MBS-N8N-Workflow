@@ -1,0 +1,231 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        256
+      ],
+      "id": "49c999b7-5134-416e-b109-e07290a42484",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://www.techtalkthai.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "230313fa-8175-45c1-b87d-3350a318bee7",
+      "name": "Techtalkthai"
+    },
+    {
+      "parameters": {
+        "url": "https://droidsans.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        160
+      ],
+      "id": "9192c2f5-3d9f-412e-ac12-39ed36684177",
+      "name": "Droidsans"
+    },
+    {
+      "parameters": {
+        "url": "https://www.srtet.co.th/rss/news",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        336
+      ],
+      "id": "3d683146-5a20-4758-9d66-14ed521806a5",
+      "name": "Srtet"
+    },
+    {
+      "parameters": {
+        "url": "https://www.nso.go.th/nsoweb/main/rssfeed/get_data/A",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        496
+      ],
+      "id": "76d129dd-ac7a-46c3-93e1-ff0b15c5d073",
+      "name": "NSO"
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        512,
+        288
+      ],
+      "id": "971b9b1f-90ef-4a75-9e2b-53210fc7f137",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "qnXQT9NYt4cZaKtp",
+          "mode": "list",
+          "cachedResultName": "Mydatatable",
+          "cachedResultUrl": "/projects/l6qjzkbSjcfw8Dt9/datatables/qnXQT9NYt4cZaKtp"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "date": "={{ $json.pubDate }}",
+            "news": "={{ $json['content:encoded'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "news",
+              "displayName": "news",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        752,
+        288
+      ],
+      "id": "7f7c0121-065b-4e78-b129-53bfe8cb6e1a",
+      "name": "Insert row"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Techtalkthai",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Droidsans",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Srtet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NSO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Techtalkthai": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Droidsans": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Srtet": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NSO": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4bac6bbf-850b-429e-a6ca-c7889c05f462",
+  "meta": {
+    "instanceId": "2cf61f31fa6398cc62fbc4944986202ee14668e03c6e496939f4a1416ba1aa70"
+  },
+  "id": "lnlnQNXmWBikOTGg",
+  "tags": []
+}
